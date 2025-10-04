@@ -1,0 +1,16 @@
+== package ==
+npm install -D eslint @eslint/js typescript typescript-eslint
+
+== init eslint ==
+npm init @eslint/config@latest
+
+== ubah eslint.config.js untuk konfigurasi backend ==
+languageOptions: { globals: globals.node },
+
+== tambahkan script pada package.json ==
+{
+  "scripts": {
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix"
+  }
+} 

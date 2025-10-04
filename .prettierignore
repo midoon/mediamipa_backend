@@ -1,0 +1,47 @@
+# ====================================
+# Ignore build outputs & dependencies
+# ====================================
+node_modules
+dist
+build
+coverage
+
+# ====================================
+# Ignore environment & system files
+# ====================================
+.env
+.env.local
+.env.development
+.env.production
+.DS_Store
+
+# ====================================
+# Ignore config or metadata
+# ====================================
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# ====================================
+# Ignore generated types or docs
+# ====================================
+*.log
+*.tmp
+*.cache
+*.tsbuildinfo
+
+# ====================================
+# Ignore static assets
+# ====================================
+public/*
+assets/*
+uploads/*
+
+# ====================================
+# Ignore ESLint & Prettier config itself
+# (optional — kalau gak mau diformat)
+# ====================================
+.eslintrc.*
+eslint.config.*
+.prettierignore
+prettier.config.*

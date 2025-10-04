@@ -1,0 +1,75 @@
+# =====================================
+# Node.js dependencies & build outputs
+# =====================================
+node_modules/
+dist/
+build/
+coverage/
+tmp/
+temp/
+
+# =====================================
+# TypeScript build artifacts
+# =====================================
+*.tsbuildinfo
+
+# =====================================
+# Environment & local configs
+# =====================================
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# =====================================
+# Logs & debug files
+# =====================================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# =====================================
+# OS / Editor / Tooling files
+# =====================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# =====================================
+# Package managers' lock files (optional)
+# Uncomment if you prefer not to commit locks
+# =====================================
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# =====================================
+# Static or uploaded assets
+# =====================================
+uploads/
+public/
+assets/
+
+# =====================================
+# Test & coverage outputs
+# =====================================
+coverage/
+*.lcov
+
+# =====================================
+# Ignore generated documentation
+# =====================================
+docs/
+*.md.tmp
+
+# =====================================
+# Ignore lint & prettier caches
+# =====================================
+.eslintcache
+

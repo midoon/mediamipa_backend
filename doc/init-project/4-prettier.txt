@@ -1,0 +1,60 @@
+npm install -D prettier eslint-config-prettier eslint-plugin-prettier
+
+buat file .prettierrc
+isi file:
+{
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "auto"
+}
+
+
+Ubah file eslint.config.js
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import prettier from "eslint-config-prettier";
+import eslintPluginPrettier from "eslint-plugin-prettier";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+  {
+    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    plugins: {
+      js,
+      prettier: eslintPluginPrettier
+    },
+    extends: [
+      "js/recommended",
+      ...tseslint.configs.recommended,
+      "plugin:prettier/recommended" // <= ini integrasi utama
+    ],
+    languageOptions: {
+      globals: globals.node // gunakan node untuk backend
+    },
+    rules: {
+      "prettier/prettier": ["error"]
+    }
+  }
+]);
+
+
+tambahkan script di package.json:
+{
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
+  }
+}
+
+NOTE: PASTIKAN format onsvae check di setting vcode
+
+
+Buat file .prettierignore

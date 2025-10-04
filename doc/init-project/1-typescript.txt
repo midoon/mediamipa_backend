@@ -1,0 +1,55 @@
+== isntall dev package ==
+npm install -D typescript ts-node @types/node @types/express nodemon eslint prettier
+
+== install basic package ==
+npm install express dotenv 
+
+
+
+
+== configure typescript ==
+npx tsc --init
+
+
+
+== tsconfig.json ==
+{
+  "compilerOptions": {
+    /* ===== File Layout ===== */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* ===== Environment ===== */
+    "target": "ES2022",               // Versi JS yang dihasilkan
+    "module": "NodeNext",             // Untuk support import/export di Node.js
+    "moduleResolution": "NodeNext",   // Resolusi modul sesuai Node ESM
+    "lib": ["ES2022"],                // Gunakan fitur bawaan JS terbaru
+    "types": ["node"],                // Tambahkan tipe untuk Node.js
+
+    /* ===== Output Files ===== */
+    "sourceMap": true,                // Biar bisa debug pakai source map
+    "declaration": true,              // Generate file .d.ts
+    "declarationMap": true,           // Source map untuk .d.ts
+
+    /* ===== Type Checking (Strict Mode) ===== */
+    "strict": true,                   // Aktifkan semua rule strict TypeScript
+    "noImplicitAny": true,            // Larang variabel tanpa tipe
+    "noUnusedLocals": true,           // Error kalau ada variabel tidak dipakai
+    "noUnusedParameters": true,       // Error kalau ada parameter tidak dipakai
+    "noImplicitReturns": true,        // Semua path fungsi harus return
+    "noFallthroughCasesInSwitch": true, // Cegah jatuh antar case di switch
+    "noUncheckedIndexedAccess": true, // Akses array/object lebih aman
+    "exactOptionalPropertyTypes": true, // Lebih ketat untuk properti opsional
+
+    /* ===== Module Behavior ===== */
+    "esModuleInterop": true,          // Supaya bisa import modul CommonJS seperti express
+    "forceConsistentCasingInFileNames": true, // Hindari error di OS case-sensitive
+    "skipLibCheck": true,             // Skip cek tipe bawaan lib untuk build lebih cepat
+    "isolatedModules": true,          // Aman buat tools seperti ts-node atau swc
+
+    /* ===== Debug/Dev ===== */
+    "pretty": true                    // Output compiler lebih rapi di terminal
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
