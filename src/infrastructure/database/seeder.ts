@@ -1,7 +1,7 @@
 import { PostType } from "../../generated/prisma/index.js";
-import prismaCllient from "./prismaClient.js";
+import prismaClient from "./prismaClient.js";
 
-const prisma = prismaCllient;
+const prisma = prismaClient;
 
 async function main() {
   await prisma.post.createMany({

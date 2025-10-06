@@ -26,6 +26,6 @@ export default defineConfig([
       "**/dist/**",
       "**/build/**",
       "**/coverage/**",
-      "**/src/generated/**", // <--- pastikan ada trailing /** agar semua file di-skip
+      "**/src/generated/**", // pastikan ada trailing /** agar semua file di-skip
     ]),
 ]);
