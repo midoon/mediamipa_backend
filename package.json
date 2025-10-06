@@ -18,6 +18,8 @@
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.37.0",
+    "@types/body-parser": "^1.19.6",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.6.2",
     "eslint": "^9.37.0",
@@ -34,6 +36,8 @@
   },
   "dependencies": {
     "@prisma/client": "^6.16.3",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0"
   },

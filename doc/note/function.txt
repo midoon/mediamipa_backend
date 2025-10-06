@@ -1,0 +1,194 @@
+Pertanyaan yang mantap banget bro 😎 — ini fundamental banget di JavaScript/TypeScript, dan penting banget buat backend yang pakai OOP + Express kayak yang lagi lo kerjain.
+
+Jadi... yuk kita bedah perbedaan antara **arrow function** (`()=>{}`) dan **function biasa** (`function() {}` atau `methodName() {}`).
+
+---
+
+## ⚙️ 1. **Perbedaan utama: konteks `this`**
+
+### 🔸 Function biasa
+
+Function biasa **punya `this` sendiri**, yang tergantung **bagaimana** dia dipanggil.
+
+Contoh:
+
+```ts
+class PostController {
+  name = "PostController";
+
+  getAll(req, res) {
+    console.log(this.name);
+  }
+}
+
+const controller = new PostController();
+
+// kalau dipanggil langsung → OK
+controller.getAll(); // ✅ "PostController"
+
+// tapi kalau dilewatkan ke Express router → GAGAL
+app.get("/api/posts", controller.getAll); // ❌ this = undefined
+```
+
+➡️ Di kasus di atas, Express manggil `getAll` tanpa konteks `controller`, jadi `this` di dalamnya `undefined`.
+
+---
+
+### 🔹 Arrow function
+
+Arrow function **tidak membuat konteks `this` baru** — dia **ngikutin `this` dari lingkup luar** (lexical scope).
+
+Contoh:
+
+```ts
+class PostController {
+  name = "PostController";
+
+  getAll = (req, res) => {
+    console.log(this.name);
+  };
+}
+
+const controller = new PostController();
+
+// tetap aman, karena arrow function bind otomatis
+app.get("/api/posts", controller.getAll); // ✅ "PostController"
+```
+
+➡️ Arrow function selalu “menempel” pada `this` di tempat dia didefinisikan, bukan saat dipanggil.
+
+---
+
+## 🧠 2. **Perbedaan lainnya**
+
+| Aspek                  | Function biasa                           | Arrow function                                                           |
+| ---------------------- | ---------------------------------------- | ------------------------------------------------------------------------ |
+| **`this`**             | Dinamis, tergantung cara pemanggilan     | Tetap (mengikat konteks tempat dideklarasikan)                           |
+| **`arguments` object** | Ada                                      | Tidak ada                                                                |
+| **`prototype`**        | Punya prototype                          | Tidak punya (tidak bisa dijadikan constructor dengan `new`)              |
+| **Cocok untuk...**     | Fungsi global, utility, atau constructor | Callback, handler event, atau method dalam class yang butuh akses `this` |
+
+---
+
+## 🚀 3. Kapan sebaiknya pakai yang mana?
+
+### ✅ Gunakan **arrow function**:
+
+* Untuk method class di backend (seperti controller, service, usecase).
+* Untuk callback (misal di `map()`, `forEach()`, `then()`, `catch()`).
+* Untuk handler event (misal di React).
+
+### ❌ Jangan gunakan arrow function:
+
+* Saat lo butuh bikin constructor (pakai `class` atau `function` biasa).
+* Saat lo butuh fungsi yang **punya `this` sendiri**, bukan mewarisi dari luar.
+
+---
+
+## 💡 Analogi gampangnya
+
+> Arrow function itu kayak *“ngikut bos-nya kemanapun”*,
+> sedangkan function biasa itu kayak *“punya rumah sendiri, tapi kalau dipanggil tanpa alamat, nyasar”* 😂
+
+---
+
+Kalau lo mau, gue bisa tunjukin versi side-by-side antara:
+
+```ts
+class PostController { getAll() {} }
+```
+
+dan
+
+```ts
+class PostController { getAll = () => {} }
+```
+
+supaya lo bisa lihat langsung bedanya `this` di runtime pakai contoh `console.log(this)`. Mau?
+
+
+===========================
+
+🔥 Wah gila — ini pertanyaan yang super tajam bro, dan yes… lo udah mulai nangkep inti dari OOP behavior di TypeScript / JavaScript.
+Kita bedah pelan-pelan ya biar jelas banget kenapa **yang di usecase boleh function biasa**, walau memang nanti dipanggil pakai `this` juga di controller.
+
+---
+
+## ⚙️ 1. Emang benar: lo manggil pakai `this.userUsecase.getAll()`
+
+Contohnya kayak gini:
+
+```ts
+class PostController {
+  constructor(private readonly postUsecase: PostUsecaseInterface) {}
+
+  getAll = async (req, res) => {
+    const posts = await this.postUsecase.getAll("news");
+    res.json(posts);
+  };
+}
+```
+
+Nah di situ, lo memang memanggil `this.postUsecase.getAll()` — tapi **konteks `this` yang aktif saat itu adalah `PostController`**, bukan `PostUsecase`.
+
+Artinya:
+
+* `this` di dalam `PostController` → merujuk ke instance controller.
+* `this` di dalam `PostUsecase` → merujuk ke instance usecase.
+
+➡️ Dan karena lo memanggil `getAll()` **dari objek instance `PostUsecase`**, bukan nyopot fungsinya keluar, maka konteks `this` di dalam `PostUsecase` **tidak hilang**.
+
+---
+
+## 🔍 2. Kapan masalah `this` itu muncul?
+
+Masalahnya cuma muncul kalau **fungsi dipanggil *tanpa* konteks objeknya**.
+
+Contoh yang **aman** ✅:
+
+```ts
+postUsecase.getAll("news"); // aman, this = PostUsecase
+```
+
+Contoh yang **bermasalah** ❌:
+
+```ts
+const func = postUsecase.getAll;
+func("news"); // this hilang! undefined
+```
+
+Nah, Express router itu **memanggil method controller tanpa konteks**,
+jadi waktu lo pasang:
+
+```ts
+router.get("/posts", controller.getAll);
+```
+
+Express bakal manggil `getAll(req, res)` langsung — bukan `controller.getAll(req, res)` — makanya `this` hilang dan error.
+
+---
+
+## 💡 3. Kesimpulan penting
+
+| Class                | Method      | Perlu arrow function?                                                             | Kenapa |
+| -------------------- | ----------- | --------------------------------------------------------------------------------- | ------ |
+| Controller           | ✅ **YA**    | Karena method dikasih ke router → kehilangan konteks `this`.                      |        |
+| Usecase / Repository | ❌ **TIDAK** | Karena dipanggil langsung dari instance (`this.usecase.method()`) → konteks aman. |        |
+
+---
+
+## 🧩 4. Analogi gampangnya
+
+> Kalau `controller.getAll` lo kasih ke orang lain (Express), dia lupa siapa “pemiliknya”, jadi `this` hilang.
+> Tapi kalau `controller` sendiri yang manggil `usecase.getAll`, dia masih inget “ini anaknya siapa”, jadi `this` tetap aman. 😎
+
+---
+
+Jadi simpulannya:
+
+> ✅ `Controller` → pakai arrow function.
+> ✅ `Usecase`, `Repository`, `Entity` → pakai function biasa.
+
+---
+
+Kalau lo mau, gue bisa tunjukin diagram panggilan `this` (Controller → Usecase → Repository) biar lo lihat rantainya dan di mana `this` bisa hilang. Mau gue buatin ilustrasinya?

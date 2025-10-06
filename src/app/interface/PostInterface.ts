@@ -1,10 +1,11 @@
 import type { GetAllPost } from "../../domain/dto/post.ts";
-import type { Post } from "../../generated/prisma/index.js";
+import type { Post } from "../../domain/entity/Post.js";
 
 export interface PostRepositoryInterface {
   getAll(type: string): Promise<Post[]>;
 }
 
 export interface PostUsecaseInterface {
-  getAll(type: string): GetAllPost[];
+  readonly postRepository: PostRepositoryInterface;
+  getAll(type: string): Promise<GetAllPost[]>;
 }

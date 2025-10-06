@@ -3,7 +3,7 @@ export enum PostType {
   ACHIEVEMENT = "achievement",
 }
 
-export default class Post {
+export class Post {
   public id: string;
   public title: string;
   public description: string;
