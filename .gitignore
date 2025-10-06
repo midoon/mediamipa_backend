@@ -73,3 +73,5 @@ docs/
 # =====================================
 .eslintcache
 
+
+/src/generated/prisma

@@ -1,0 +1,85 @@
+https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-mysql
+
+npm install -D prisma
+
+npx prisma init --datasource-provider mysql --output ../src/generated/prisma
+
+
+>> bikin struktur tabel di prisma
+
+terus $ npx prisma migrate dev --name init
+
+$ npm install @prisma/client
+
+$ npx prisma generate
+
+
+
+
+
+
+
+
+
+
+
+
+1️⃣ npx prisma init
+Ini perintah buat inisialisasi Prisma di project lo.
+Hasilnya:
+
+Bikin folder prisma/
+
+Di dalamnya ada file schema.prisma
+
+Bikin file .env untuk konfigurasi koneksi database
+
+2️⃣ --datasource-provider mysql
+Flag ini langsung set provider database di schema.prisma jadi MySQL
+Kalau biasanya default postgresql, flag ini langsung ganti ke:
+
+prisma
+Copy
+Edit
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+3️⃣ --output ../generated/prisma
+Ini ngatur lokasi di mana Prisma Client hasil generate akan disimpan.
+Secara default Prisma Client muncul di:
+
+bash
+Copy
+Edit
+node_modules/@prisma/client
+Tapi kalau lo pakai flag ini, hasil generate akan keluar di:
+
+bash
+Copy
+Edit
+../generated/prisma
+(dilihat relatif dari folder prisma/schema.prisma)
+
+Jadi misalnya project lo kayak gini:
+
+bash
+Copy
+Edit
+project/
+  prisma/               # di sini schema.prisma
+  src/
+  generated/prisma/     # di sini prisma client hasil generate
+Maka lo bisa import client-nya kayak:
+
+js
+Copy
+Edit
+import { PrismaClient } from '../generated/prisma';
+💡 Kapan berguna?
+
+Kalau mau pisahin Prisma Client dari node_modules biar bisa di-build bareng kode lo (misalnya di monorepo atau serverless).
+
+Kalau mau commit Prisma Client ke repo (walau ini jarang direkomendasikan kecuali untuk build serverless).
+
+Kalau environment deploy lo nggak install devDependencies, tapi mau tetap pakai Prisma Client.

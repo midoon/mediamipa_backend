@@ -8,6 +8,7 @@ import { defineConfig } from "eslint/config";
 export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    ignores: ["node_modules", "dist", "build", "coverage", "src/generated"],
     plugins: {
       js,
       prettier: eslintPluginPrettier,

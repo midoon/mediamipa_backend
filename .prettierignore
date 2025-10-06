@@ -45,3 +45,7 @@ uploads/*
 eslint.config.*
 .prettierignore
 prettier.config.*
+
+# Ignore Prisma client generated files
+src/generated/*
+src/generated/**
