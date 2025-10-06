@@ -15,17 +15,15 @@ datasource db {
 }
 
 enum PostType {
-  sedentary
-  lowActive
-  active
-  veryActive
+  news
+  achievement
 } 
 
 model Post {
   id String @id @db.VarChar(255)
   title String  @db.VarChar(255)
   description String @db.Text
-  image String @db.Text
+  image String? @db.Text
   type PostType
   created_at DateTime  @db.Timestamp(3)
   updated_at DateTime @db.Timestamp(3)

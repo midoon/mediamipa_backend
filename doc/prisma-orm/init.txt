@@ -15,6 +15,11 @@ $ npx prisma generate
 
 
 
+>> jalanin perintah seeder
+$ npx prisma db seed
+
+
+
 
 
 
