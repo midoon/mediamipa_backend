@@ -1,0 +1,20 @@
+npm install -D prettier eslint-config-prettier eslint-plugin-prettier
+
+buat file .prettierrc
+isi file:
+{
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "auto"
+}
+
+NOTE: PASTIKAN format onsvae check di setting vcode
+
+
+Buat file .prettierignore

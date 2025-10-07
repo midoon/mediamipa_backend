@@ -16,6 +16,7 @@ $ npx prisma generate
 
 
 >> jalanin perintah seeder
+>> buat file prisma.config.ts
 $ npx prisma db seed
 
 
