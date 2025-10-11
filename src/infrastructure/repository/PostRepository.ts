@@ -10,6 +10,10 @@ export class PostRepository implements PostRepositoryInterface {
       where: {
         type: type as PrismaPostType,
       },
+      orderBy: {
+        created_at: "desc", // urutkan dari yang terbaru
+      },
+      take: 5, // ambil hanya 5 data teratas
     });
 
     return posts.map(

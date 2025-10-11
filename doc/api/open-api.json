@@ -148,6 +148,10 @@
                             "type": "string",
                             "example": "image.com"
                           },
+                          "type": {
+                            "type": "string",
+                            "example": "news"
+                          },
                           "date": {
                             "type": "string",
                             "example": "17-08-2025"
@@ -211,6 +215,10 @@
                         "image": {
                           "type": "string",
                           "example": "image.com"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "news"
                         },
                         "date": {
                           "type": "string",
