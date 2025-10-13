@@ -16,7 +16,8 @@ export class PostController {
   getAll = async (req: Request, res: Response): Promise<void> => {
     try {
       const type = (req.query["type"] as string) || "news";
-      const posts: PostDto[] = await this.postUsecase.getAll(type);
+      const limit = Number(req.query["limit"]) || 0;
+      const posts: PostDto[] = await this.postUsecase.getAll(type, limit);
 
       const response: DataResponse<PostDto[]> = {
         status: true,
