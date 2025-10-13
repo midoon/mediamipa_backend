@@ -105,8 +105,15 @@
           {
             "name": "type",
             "in": "query",
-            "description": "newsId",
+            "description": "postId",
             "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "count of retreve data",
+            "required": false,
             "schema": { "type": "string" }
           }
         ],
