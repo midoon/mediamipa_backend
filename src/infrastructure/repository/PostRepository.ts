@@ -11,9 +11,36 @@ export class PostRepository implements PostRepositoryInterface {
         type: type as PrismaPostType,
       },
       orderBy: {
-        created_at: "desc", // urutkan dari yang terbaru
+        created_at: "desc",
       },
-      take: 5, // ambil hanya 5 data teratas
+    });
+
+    return posts.map(
+      (p) =>
+        new Post(
+          p.id,
+          p.title,
+          p.description,
+          // konversi enum Prisma ke enum Domain
+          p.type === PrismaPostType.news
+            ? DomainPostType.NEWS
+            : DomainPostType.ACHIEVEMENT,
+          p.created_at,
+          p.updated_at,
+          p.image
+        )
+    );
+  }
+
+  async getAllWithLimit(type: string, limit: number): Promise<Post[]> {
+    const posts = await prismaClient.post.findMany({
+      where: {
+        type: type as PrismaPostType,
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+      take: limit,
     });
 
     return posts.map(
