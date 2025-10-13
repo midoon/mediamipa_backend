@@ -1,4 +1,4 @@
-export type GetAllPost = {
+export type PostDto = {
   id: string;
   title: string;
   description: string;

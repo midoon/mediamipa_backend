@@ -32,4 +32,28 @@ export class PostRepository implements PostRepositoryInterface {
         )
     );
   }
+
+  async getById(id: string): Promise<Post> {
+    const post = await prismaClient.post.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!post) {
+      throw new Error(`Post with id '${id}' not found`);
+    }
+
+    return new Post(
+      post.id,
+      post.title,
+      post.description,
+      post.type === PrismaPostType.news
+        ? DomainPostType.NEWS
+        : DomainPostType.ACHIEVEMENT,
+      post.created_at,
+      post.updated_at,
+      post.image
+    );
+  }
 }
